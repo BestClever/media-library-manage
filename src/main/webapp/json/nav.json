@@ -1,0 +1,47 @@
+[
+  {
+    "id": 2,
+    "title": "媒体管理",
+    "icon": "&#xe653;",
+    "href": "",
+    "spread": false,
+    "target": null,
+    "children": [
+      {
+        "id": 4,
+        "title": "图书",
+        "icon": "&#xe770;",
+        "href": "book/index",
+        "spread": false,
+        "target": null,
+        "children": [],
+        "checkArr": "0",
+        "parentId": 2
+      },
+      {
+        "id": 5,
+        "title": "视频光盘",
+        "icon": "&#xe657;",
+        "href": "video/index",
+        "spread": false,
+        "target": null,
+        "children": [],
+        "checkArr": "0",
+        "parentId": 2
+      },
+      {
+        "id": 6,
+        "title": "图画",
+        "icon": "&#xe60a;",
+        "href": "picture/index",
+        "spread": false,
+        "target": null,
+        "children": [],
+        "checkArr": "0",
+        "parentId": 2
+      }
+    ],
+    "checkArr": "0",
+    "parentId": 1
+  }
+]

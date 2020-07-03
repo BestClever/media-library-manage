@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.halfsummer.business.mapper.VideoMapper" >
+  <resultMap id="BaseResultMap" type="com.halfsummer.business.domain.Video" >
+    <id column="video_id" property="videoId" jdbcType="VARCHAR" />
+    <result column="video_title" property="videoTitle" jdbcType="VARCHAR" />
+    <result column="book_author" property="bookAuthor" jdbcType="VARCHAR" />
+    <result column="video_level" property="videoLevel" jdbcType="CHAR" />
+    <result column="producer_name" property="producerName" jdbcType="VARCHAR" />
+    <result column="producer_year" property="producerYear" jdbcType="VARCHAR" />
+    <result column="video_time" property="videoTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    video_id, video_title, book_author, video_level, producer_name, producer_year, video_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.halfsummer.business.domain.VideoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from video_disk
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from video_disk
+    where video_id = #{videoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from video_disk
+    where video_id = #{videoId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.halfsummer.business.domain.VideoExample" >
+    delete from video_disk
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.halfsummer.business.domain.Video" >
+    insert into video_disk (video_id, video_title, book_author, 
+      video_level, producer_name, producer_year, 
+      video_time)
+    values (#{videoId,jdbcType=VARCHAR}, #{videoTitle,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, 
+      #{videoLevel,jdbcType=CHAR}, #{producerName,jdbcType=VARCHAR}, #{producerYear,jdbcType=VARCHAR}, 
+      #{videoTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.halfsummer.business.domain.Video" >
+    insert into video_disk
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        video_id,
+      </if>
+      <if test="videoTitle != null" >
+        video_title,
+      </if>
+      <if test="bookAuthor != null" >
+        book_author,
+      </if>
+      <if test="videoLevel != null" >
+        video_level,
+      </if>
+      <if test="producerName != null" >
+        producer_name,
+      </if>
+      <if test="producerYear != null" >
+        producer_year,
+      </if>
+      <if test="videoTime != null" >
+        video_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        #{videoId,jdbcType=VARCHAR},
+      </if>
+      <if test="videoTitle != null" >
+        #{videoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAuthor != null" >
+        #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="videoLevel != null" >
+        #{videoLevel,jdbcType=CHAR},
+      </if>
+      <if test="producerName != null" >
+        #{producerName,jdbcType=VARCHAR},
+      </if>
+      <if test="producerYear != null" >
+        #{producerYear,jdbcType=VARCHAR},
+      </if>
+      <if test="videoTime != null" >
+        #{videoTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.halfsummer.business.domain.VideoExample" resultType="java.lang.Integer" >
+    select count(*) from video_disk
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update video_disk
+    <set >
+      <if test="record.videoId != null" >
+        video_id = #{record.videoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoTitle != null" >
+        video_title = #{record.videoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookAuthor != null" >
+        book_author = #{record.bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoLevel != null" >
+        video_level = #{record.videoLevel,jdbcType=CHAR},
+      </if>
+      <if test="record.producerName != null" >
+        producer_name = #{record.producerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.producerYear != null" >
+        producer_year = #{record.producerYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoTime != null" >
+        video_time = #{record.videoTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update video_disk
+    set video_id = #{record.videoId,jdbcType=VARCHAR},
+      video_title = #{record.videoTitle,jdbcType=VARCHAR},
+      book_author = #{record.bookAuthor,jdbcType=VARCHAR},
+      video_level = #{record.videoLevel,jdbcType=CHAR},
+      producer_name = #{record.producerName,jdbcType=VARCHAR},
+      producer_year = #{record.producerYear,jdbcType=VARCHAR},
+      video_time = #{record.videoTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.halfsummer.business.domain.Video" >
+    update video_disk
+    <set >
+      <if test="videoTitle != null" >
+        video_title = #{videoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAuthor != null" >
+        book_author = #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="videoLevel != null" >
+        video_level = #{videoLevel,jdbcType=CHAR},
+      </if>
+      <if test="producerName != null" >
+        producer_name = #{producerName,jdbcType=VARCHAR},
+      </if>
+      <if test="producerYear != null" >
+        producer_year = #{producerYear,jdbcType=VARCHAR},
+      </if>
+      <if test="videoTime != null" >
+        video_time = #{videoTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where video_id = #{videoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.halfsummer.business.domain.Video" >
+    update video_disk
+    set video_title = #{videoTitle,jdbcType=VARCHAR},
+      book_author = #{bookAuthor,jdbcType=VARCHAR},
+      video_level = #{videoLevel,jdbcType=CHAR},
+      producer_name = #{producerName,jdbcType=VARCHAR},
+      producer_year = #{producerYear,jdbcType=VARCHAR},
+      video_time = #{videoTime,jdbcType=VARCHAR}
+    where video_id = #{videoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

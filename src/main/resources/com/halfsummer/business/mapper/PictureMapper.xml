@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.halfsummer.business.mapper.PictureMapper" >
+  <resultMap id="BaseResultMap" type="com.halfsummer.business.domain.Picture" >
+    <id column="picture_id" property="pictureId" jdbcType="VARCHAR" />
+    <result column="picture_title" property="pictureTitle" jdbcType="VARCHAR" />
+    <result column="book_author" property="bookAuthor" jdbcType="VARCHAR" />
+    <result column="picture_level" property="pictureLevel" jdbcType="CHAR" />
+    <result column="producer_national" property="producerNational" jdbcType="VARCHAR" />
+    <result column="work_long" property="workLong" jdbcType="VARCHAR" />
+    <result column="work_width" property="workWidth" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    picture_id, picture_title, book_author, picture_level, producer_national, work_long, 
+    work_width
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.halfsummer.business.domain.PictureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from picture
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from picture
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.halfsummer.business.domain.PictureExample" >
+    delete from picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.halfsummer.business.domain.Picture" >
+    insert into picture (picture_id, picture_title, book_author, 
+      picture_level, producer_national, work_long, 
+      work_width)
+    values (#{pictureId,jdbcType=VARCHAR}, #{pictureTitle,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, 
+      #{pictureLevel,jdbcType=CHAR}, #{producerNational,jdbcType=VARCHAR}, #{workLong,jdbcType=VARCHAR}, 
+      #{workWidth,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.halfsummer.business.domain.Picture" >
+    insert into picture
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pictureId != null" >
+        picture_id,
+      </if>
+      <if test="pictureTitle != null" >
+        picture_title,
+      </if>
+      <if test="bookAuthor != null" >
+        book_author,
+      </if>
+      <if test="pictureLevel != null" >
+        picture_level,
+      </if>
+      <if test="producerNational != null" >
+        producer_national,
+      </if>
+      <if test="workLong != null" >
+        work_long,
+      </if>
+      <if test="workWidth != null" >
+        work_width,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pictureId != null" >
+        #{pictureId,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureTitle != null" >
+        #{pictureTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAuthor != null" >
+        #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureLevel != null" >
+        #{pictureLevel,jdbcType=CHAR},
+      </if>
+      <if test="producerNational != null" >
+        #{producerNational,jdbcType=VARCHAR},
+      </if>
+      <if test="workLong != null" >
+        #{workLong,jdbcType=VARCHAR},
+      </if>
+      <if test="workWidth != null" >
+        #{workWidth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.halfsummer.business.domain.PictureExample" resultType="java.lang.Integer" >
+    select count(*) from picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update picture
+    <set >
+      <if test="record.pictureId != null" >
+        picture_id = #{record.pictureId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictureTitle != null" >
+        picture_title = #{record.pictureTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookAuthor != null" >
+        book_author = #{record.bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictureLevel != null" >
+        picture_level = #{record.pictureLevel,jdbcType=CHAR},
+      </if>
+      <if test="record.producerNational != null" >
+        producer_national = #{record.producerNational,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workLong != null" >
+        work_long = #{record.workLong,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workWidth != null" >
+        work_width = #{record.workWidth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update picture
+    set picture_id = #{record.pictureId,jdbcType=VARCHAR},
+      picture_title = #{record.pictureTitle,jdbcType=VARCHAR},
+      book_author = #{record.bookAuthor,jdbcType=VARCHAR},
+      picture_level = #{record.pictureLevel,jdbcType=CHAR},
+      producer_national = #{record.producerNational,jdbcType=VARCHAR},
+      work_long = #{record.workLong,jdbcType=VARCHAR},
+      work_width = #{record.workWidth,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.halfsummer.business.domain.Picture" >
+    update picture
+    <set >
+      <if test="pictureTitle != null" >
+        picture_title = #{pictureTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAuthor != null" >
+        book_author = #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureLevel != null" >
+        picture_level = #{pictureLevel,jdbcType=CHAR},
+      </if>
+      <if test="producerNational != null" >
+        producer_national = #{producerNational,jdbcType=VARCHAR},
+      </if>
+      <if test="workLong != null" >
+        work_long = #{workLong,jdbcType=VARCHAR},
+      </if>
+      <if test="workWidth != null" >
+        work_width = #{workWidth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.halfsummer.business.domain.Picture" >
+    update picture
+    set picture_title = #{pictureTitle,jdbcType=VARCHAR},
+      book_author = #{bookAuthor,jdbcType=VARCHAR},
+      picture_level = #{pictureLevel,jdbcType=CHAR},
+      producer_national = #{producerNational,jdbcType=VARCHAR},
+      work_long = #{workLong,jdbcType=VARCHAR},
+      work_width = #{workWidth,jdbcType=VARCHAR}
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </update>
+</mapper>
