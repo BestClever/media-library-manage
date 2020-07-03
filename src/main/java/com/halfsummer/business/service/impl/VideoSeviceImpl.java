@@ -9,6 +9,7 @@ import com.halfsummer.baseframework.result.DataGridResultInfo;
 import com.halfsummer.baseframework.result.PageWrapper;
 import com.halfsummer.baseframework.result.ResultDataUtil;
 import com.halfsummer.baseframework.result.ResultInfo;
+import com.halfsummer.baseframework.util.ResourcesUtil;
 import com.halfsummer.business.domain.Video;
 import com.halfsummer.business.domain.VideoExample;
 import com.halfsummer.business.mapper.VideoMapper;
@@ -64,6 +65,12 @@ public class VideoSeviceImpl implements VideoSevice {
      * @return
      */
     public ResultInfo save(VideoVo videoVo){
+        //判断总数是否大于最大值
+        int videoCount = videoMapper.countByExample(new VideoExample());
+        int videoMaxCount = Integer.valueOf(ResourcesUtil.getValue("resource.config", "videoMaxCount"));
+        if (videoCount>videoMaxCount) {
+            return ResultDataUtil.createFail(CommonEnum.REPERTORY_FULL);
+        }
         Video video = new Video();
         BeanUtils.copyProperties(videoVo,video);
         int b = videoMapper.insert(video);

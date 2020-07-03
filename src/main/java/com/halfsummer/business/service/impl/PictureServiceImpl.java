@@ -9,6 +9,7 @@ import com.halfsummer.baseframework.result.DataGridResultInfo;
 import com.halfsummer.baseframework.result.PageWrapper;
 import com.halfsummer.baseframework.result.ResultDataUtil;
 import com.halfsummer.baseframework.result.ResultInfo;
+import com.halfsummer.baseframework.util.ResourcesUtil;
 import com.halfsummer.business.domain.Book;
 import com.halfsummer.business.domain.Picture;
 import com.halfsummer.business.domain.PictureExample;
@@ -64,6 +65,12 @@ public class PictureServiceImpl implements PictureService {
      * @return
      */
     public ResultInfo save(PictureVo pictureVo){
+        //判断总数是否大于最大值
+        int pictureCount = pictureMapper.countByExample(new PictureExample());
+        int pictureMaxCount = Integer.valueOf(ResourcesUtil.getValue("resource.config", "pictureMaxCount"));
+        if (pictureCount>pictureMaxCount) {
+            return ResultDataUtil.createFail(CommonEnum.REPERTORY_FULL);
+        }
         Picture picture = new Picture();
         BeanUtils.copyProperties(pictureVo,picture);
         int b = pictureMapper.insert(picture);
